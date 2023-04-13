@@ -13,6 +13,41 @@ export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) 
     //find the employee object for the current user
     const userEmployee = employees.find(employee => employee.userId === currentUser.id)
 
+
+    //function that determines if the current user can close the ticket
+    const canClose = () => {
+        if (userEmployee?.id === assignedEmployee?.id && ticketObject.dateCompleted === ""){
+            return <button onClick={closeTicket} className="ticket__finish">Finish</button>
+        }
+        else{ return "" }
+
+    }
+
+    //function that updates the ticket with a new dateCompleted
+    const closeTicket = () => {
+        const copy = {
+            userId: ticketObject.id,
+            description: ticketObject.description,
+            emergency: ticketObject.emergency,
+            dateCompleted: new Date()
+        }
+
+        return fetch(`http://localhost:8088/serviceTickets/${ticketObject.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(copy)
+
+        })
+        .then(response => response.json())
+        .then(getAllTickets)
+
+
+    }
+
+
+
     const buttonOrNoButton = () => {
         if (currentUser.staff){
             return <button
@@ -59,6 +94,8 @@ export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) 
                         :buttonOrNoButton()
 
                 }
+
+                {canClose()}
                 
                 
                  </footer>
