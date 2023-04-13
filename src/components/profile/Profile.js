@@ -1,3 +1,4 @@
+import { CustomerForm } from "./CustomerForm.js"
 import { EmployeeForm } from "./EmployeeForm.js"
 
 export const Profile = () => {
@@ -10,7 +11,7 @@ export const Profile = () => {
     }
 
     else{
-        return <></>
+        return <CustomerForm/>
     }
 
 }

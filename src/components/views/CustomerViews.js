@@ -1,6 +1,7 @@
 import { Outlet, Route, Routes } from "react-router-dom"
 import { TicketForm } from "../tickets/TicketForm"
 import { TicketList } from "../tickets/TicketList.js"
+import { Profile } from "../profile/Profile.js"
 
 export const CustomerViews = () => {
 	return (
@@ -16,7 +17,8 @@ export const CustomerViews = () => {
 
                 <Route path="tickets" element={ <TicketList/> } />
                 <Route path="ticket/create" element={ <TicketForm /> } />
-    
+                <Route path="profile" element={  <Profile/> } />
+
             </Route>
         </Routes>
     )
