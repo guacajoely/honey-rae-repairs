@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Customer } from "./Customer.js"
 import "./Customers.css"
+import { Customer } from "./Customer.js"
 
 export const CustomerList = () => {
     const [customers, setCustomers] = useState([])
