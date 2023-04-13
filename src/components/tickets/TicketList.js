@@ -37,13 +37,18 @@ export const TicketList = ({ searchTermState }) => {
         [emergency, tickets]
     )
 
-    useEffect(
-        () => {
+        const getAllTickets = () => {
             fetch('http://localhost:8088/serviceTickets?_embed=employeeTickets')
             .then(response => response.json())
             .then((ticketArray) => {
                 setTickets(ticketArray)
             })
+        }
+
+    useEffect(
+        () => {
+
+            getAllTickets()
 
             fetch('http://localhost:8088/employees?_expand=user')
             .then(response => response.json())
@@ -109,7 +114,10 @@ export const TicketList = ({ searchTermState }) => {
         <article className="tickets">
             {
                 filteredTickets.map(
-                    (ticket) => <Ticket employees={employees} isStaff={honeyUserObject.staff} ticketObject={ticket}/>
+                    (ticket) => <Ticket employees={employees} 
+                                        currentUser={honeyUserObject} 
+                                        ticketObject={ticket}
+                                        getAllTickets={getAllTickets}/>
                 )
             }
     </article>
