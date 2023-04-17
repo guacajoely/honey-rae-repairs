@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { claimTicket, deleteTicket, editTicket } from "../ApiManager.js"
 
 export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) => {
 
@@ -27,9 +28,7 @@ export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) 
        const deleteButton = () => {
         if (!currentUser.staff){
             return <button onClick={() => {
-                fetch(`http://localhost:8088/serviceTickets/${ticketObject.id}`, {
-                    method: "DELETE"
-                })
+                deleteTicket(ticketObject.id)
                 .then(getAllTickets)
             }} className="ticket__delete">Delete</button>
         }
@@ -39,21 +38,13 @@ export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) 
     //function that updates the ticket with a new dateCompleted
     const closeTicket = () => {
         const copy = {
-            userId: ticketObject.id,
+            userId: ticketObject.userId,
             description: ticketObject.description,
             emergency: ticketObject.emergency,
             dateCompleted: new Date()
         }
 
-        return fetch(`http://localhost:8088/serviceTickets/${ticketObject.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(copy)
-
-        })
-        .then(response => response.json())
+        return editTicket(ticketObject.id, copy)
         .then(getAllTickets)
     }
 
@@ -64,18 +55,8 @@ export const Ticket = ( {ticketObject, currentUser, employees, getAllTickets} ) 
             return <button
                             onClick={ () => {
 
-                                fetch(`http://localhost:8088/employeeTickets`, {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({
-                                        employeeId: userEmployee.id,
-                                        serviceTicketId: ticketObject.id
-                                    })
-
-                                })
-                                .then(response => response.json())
+                                claimTicket(userEmployee.id, ticketObject.id)
+  
                                 .then(() => {
                                     getAllTickets()
                                 })

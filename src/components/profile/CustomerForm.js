@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { editCustomer, getCustomerById } from "../ApiManager.js"
 
 export const CustomerForm = () => {
     // TODO: Provide initial state for profile
@@ -13,8 +14,7 @@ export const CustomerForm = () => {
 
     // TODO: Get customer profile info from API and update state
     useEffect(() => {
-        fetch(`http://localhost:8088/customers?userId=${honeyUserObject.id}`)
-            .then(response => response.json())
+        getCustomerById(honeyUserObject.id)
             .then((customerArray) => {
                 const customerObject = customerArray[0]
                 updateProfile(customerObject)
@@ -43,15 +43,7 @@ export const CustomerForm = () => {
             TODO: Perform the PUT fetch() call here to update the profile.
             Navigate user to home page when done.
         */
-            fetch(`http://localhost:8088/customers/${profile.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(profile)
-
-            })
-            .then(response => response.json())
+            editCustomer(profile)
 
             // FEEDBACK CH 13 - chain the following Promise code to your PUT operation.
             .then(() => {

@@ -1,8 +1,7 @@
 .employees {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
+    width: 300px;
 }
 
 .employee {

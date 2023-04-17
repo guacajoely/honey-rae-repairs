@@ -45,6 +45,7 @@ export const TicketList = ({ searchTermState }) => {
             })
         }
 
+    // NOT GOING TO MOVE THESE TWO FETCH REQUESTS TO API MANAGER BECAUSE THEY ARE GETTING CALLED IN MULTIPLE PLACES AND ARE ALREADY NAMED WHAT I WOULD NAME THEM AND I'D PREFER TO LEAVE THEM AS IS
     useEffect(
         () => {
 
